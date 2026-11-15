@@ -1,12 +1,7 @@
 /* ==========================================================
-   Dóra Makeup – stíluslap
-   1) alapok és animációk   2) szakaszok stílusai
+                   Dóra Makeup – stíluslap
    ========================================================== */
 
-/* ----- Változók -----
-   --accent : a fő rózsás-barna szín (gombok, kiemelések); egy helyen átírható
-   --nav-h  : a felső menü magassága (a legördülő menü és a görgetés ehhez igazodik)
-   --strip-h: a futó sötét sáv magassága (a nyitókép méretezéséhez kell) */
 :root{
   --accent:#8E5A55;
   --nav-h:83px;
@@ -14,12 +9,11 @@
 }
 
 /* ===== Alapok ===== */
-/* Menüpontra kattintva az oldal simán legörög. A scroll-padding a rögzített menü magassága,
-   hogy a menü ne takarja el a szakasz címét. */
+
 html{scroll-behavior:smooth;scroll-padding-top:calc(var(--nav-h) + 12px)}
-/* Az oldal ne tudjon oldalra csúszni (pl. telefonon a kilógó díszek miatt). A "clip" nem rontja el a rögzített menüt. */
+/* Az oldal ne tudjon oldalra csúszni */
 body{margin:0;overflow-x:clip}
-/* Linkek: öröklik a szövegszínt, nincs aláhúzás; ráhúzva kicsit halványodnak. */
+/* Linkek: öröklik a szövegszínt */
 a{color:inherit;text-decoration:none}
 a:hover{opacity:.8}
 
