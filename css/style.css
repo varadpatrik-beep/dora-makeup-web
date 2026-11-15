@@ -1,0 +1,1272 @@
+/* ==========================================================
+   Dóra Makeup – stíluslap
+   1) alapok és animációk   2) szakaszok stílusai
+   ========================================================== */
+
+/* ----- Változók -----
+   --accent : a fő rózsás-barna szín (gombok, kiemelések); egy helyen átírható
+   --nav-h  : a felső menü magassága (a legördülő menü és a görgetés ehhez igazodik)
+   --strip-h: a futó sötét sáv magassága (a nyitókép méretezéséhez kell) */
+:root{
+  --accent:#8E5A55;
+  --nav-h:83px;
+  --strip-h:91px;
+}
+
+/* ===== Alapok ===== */
+/* Menüpontra kattintva az oldal simán legörög. A scroll-padding a rögzített menü magassága,
+   hogy a menü ne takarja el a szakasz címét. */
+html{scroll-behavior:smooth;scroll-padding-top:calc(var(--nav-h) + 12px)}
+/* Az oldal ne tudjon oldalra csúszni (pl. telefonon a kilógó díszek miatt). A "clip" nem rontja el a rögzített menüt. */
+body{margin:0;overflow-x:clip}
+/* Linkek: öröklik a szövegszínt, nincs aláhúzás; ráhúzva kicsit halványodnak. */
+a{color:inherit;text-decoration:none}
+a:hover{opacity:.8}
+
+/* ===== Animációk ===== */
+/* Megjelenés görgetéskor: lentről felúszik és kinő (a .rv osztályú elemekre kerül, lásd lejjebb). */
+@keyframes rise{from{opacity:0;transform:translateY(56px) scale(.95)}to{opacity:1;transform:none}}
+/* Lebegés: a nyitókép díszkörei fel-le mozognak. */
+@keyframes floaty{0%,100%{translate:0 0}50%{translate:0 -18px}}
+/* Futó sáv: a szöveg balra úszik. A tartalom kétszer szerepel, ezért -50%-nál észrevétlenül kezdődik elölről. */
+@keyframes marq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+/* Pulzálás: a Notino foglalás gomb körül finom gyűrű nő ki. */
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(142,90,85,.45)}50%{box-shadow:0 0 0 14px rgba(142,90,85,0)}}
+/* .fl = lebegő elem, .tick = futó sáv, .pulse = pulzáló gomb */
+.fl{animation:floaty 5s ease-in-out infinite}
+.tick{display:flex;flex-wrap:nowrap;width:max-content;animation:marq 24s linear infinite}
+.pulse{animation:pulse 2.4s ease-out infinite}
+/* Kártyák, csempék, címkék: ráhúzáskor kicsit megnőnek. */
+.tile,.chip,.card{transition:scale .3s ease}
+.tile:hover,.card:hover{scale:1.03}
+.chip:hover{scale:1.08}
+/* .rv = görgetésre megjelenő elem. Csak akkor, ha a böngésző tudja a görgetéses animációt (egyébként a js/script.js tartaléka lép be). */
+@supports (animation-timeline:view()){
+.rv{animation:rise linear both;animation-timeline:view();animation-range:entry 0% entry 60%}
+}
+/* Szempillaspirál: az íven mozog (offset-distance), a hozzá tartozó pillák balról jobbra előbukkannak (revealx). */
+@keyframes wandmove{from{offset-distance:0%}to{offset-distance:100%}}
+/* Rúzs-jelző a jobb szélen: a csík nő (lgrow), a rúzs lefelé halad (lride) a görgetés mértékében. */
+@keyframes lgrow{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+@keyframes lride{from{top:0%}to{top:100%}}
+
+/* ===== Szempilla/rúzs animáció a képernyő szélén ===== */
+/* Alapból rejtve; csak ott jelennek meg, ahol a böngésző tudja a görgetéses animációt. */
+.wand,.lp{display:none}
+@keyframes revealx{from{scale:0 1}to{scale:1 1}}
+.mini{display:none}
+@supports (animation-timeline:scroll()) and (offset-path:path('M0 0 L1 1')){
+.mini{display:block}
+.mini .wand{display:block;offset-path:path('M 49 140 Q 400 -66 751 140');offset-rotate:0deg;animation:wandmove linear both;animation-timeline:scroll(root);animation-iteration-count:6}
+.mini .lr{transform-box:fill-box;transform-origin:0 50%;animation:revealx linear both;animation-timeline:scroll(root);animation-iteration-count:6}
+}
+/* A kis szempilla animáció keskenyebb ablakban eltűnik, hogy ne takarjon tartalmat. */
+@media (max-width:1300px){.mini{display:none!important}}
+@supports (animation-timeline:scroll()){
+.lp{display:block}
+.lp-fill{transform-origin:top;animation:lgrow linear both;animation-timeline:scroll(root)}
+.lp-rider{animation:lride linear both;animation-timeline:scroll(root)}
+}
+/* Telefonon a rúzs-jelző rejtve van. */
+@media (max-width:700px){.lp{display:none!important}}
+/* Ha a készüléken „mozgás csökkentése" van bekapcsolva, az animációk kikapcsolnak. */
+@media (prefers-reduced-motion:reduce){.wand,.lr,.lp-fill,.lp-rider{animation:none!important}}
+
+/* ===== Vissza a tetejére gomb ===== */
+/* „Vissza a tetejére" gomb: 240–480 px görgetés között jelenik meg. */
+@keyframes showtop{from{opacity:0;visibility:hidden}to{opacity:1;visibility:visible}}
+.totop{position:fixed;right:24px;bottom:24px;z-index:60;width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:24px;line-height:1;box-shadow:0 6px 20px rgba(26,21,20,.25);transition:transform .25s ease}
+.totop:hover{transform:translateY(-4px);opacity:1}
+@supports (animation-timeline:scroll()){.totop{animation:showtop linear both;animation-timeline:scroll(root);animation-range:240px 480px}}
+/* Mozgáscsökkentés: a többi animáció is kikapcsol. */
+@media (prefers-reduced-motion:reduce){.rv,.fl,.tick,.pulse{animation:none!important}}
+
+/* Tartalék (JS) a régebbi böngészőkhöz: lásd js/script.js */
+.no-view .rv{opacity:0;transform:translateY(48px) scale(.96);transition:opacity .7s ease,transform .7s ease}
+.no-view .rv.in{opacity:1;transform:none}
+.no-scroll .totop{opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s}
+.no-scroll .totop.show{opacity:1;visibility:visible}
+.no-scroll .lp{display:block}
+.no-scroll .lp-fill{transform:scaleY(var(--p,0))}
+.no-scroll .lp-rider{top:calc(var(--p,0) * 100%)}
+
+
+/* ===== Oldal eleje / háttér ===== */
+/* Minden osztály neve így épül fel: szakasz-elem-sorszám (pl. munkak-div-4 = a Munkáim szakasz 4. típusú <div>-je). */
+/* Az egész oldal alapja: háttérszín, betűtípus (Jost), szövegszín */
+.top-div-1{
+  background:#F3EAE4;
+  color:#1A1514;
+  font-family:'Jost',Arial,sans-serif;
+  font-size:18px;
+  line-height:1.6;
+}
+
+/* ===== Menü ===== */
+/* Asztali nézet. A telefonos (hamburgeres) változat a fájl végén van. */
+/* Felső menüsáv: görgetéskor fent marad (sticky), sötét, kicsit áttetsző háttér */
+.nav-div-1{
+  position:sticky;
+  top:0;
+  z-index:50;
+  background:rgba(26,21,20,.95);
+  color:#F3EAE4;
+  -webkit-backdrop-filter:blur(10px);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid rgba(243,234,228,.12);
+}
+/* A menüsáv belső sora: balra a logó, jobbra a menüpontok (középre igazítva max. 1200 px) */
+.nav-div-2{
+  max-width:1200px;
+  margin:0 auto;
+  padding:14px 32px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:16px;
+  align-items:center;
+  justify-content:space-between;
+}
+/* Logó (link az oldal tetejére) */
+.nav-a-1{
+  position:relative;
+  display:inline-block;
+  line-height:1;
+  padding:2px 6px 0;
+}
+/* Rózsás ecsetvonás a DORA felirat mögött */
+.nav-svg-1{
+  position:absolute;
+  left:34px;
+  top:-8px;
+  width:132px;
+  height:49px;
+  z-index:0;
+  overflow:visible;
+}
+/* „DORA" felirat (Bodoni Moda betű) */
+.nav-span-1{
+  position:relative;
+  z-index:1;
+  display:block;
+  font-family:'Bodoni Moda',Georgia,serif;
+  font-weight:700;
+  font-size:38px;
+  letter-spacing:.015em;
+  color:#F3EAE4;
+}
+/* „MAKEUP" felirat, nagy betűközzel */
+.nav-span-2{
+  position:relative;
+  z-index:1;
+  display:block;
+  text-align:center;
+  font-family:'Bodoni Moda',Georgia,serif;
+  font-weight:400;
+  font-size:11px;
+  letter-spacing:.62em;
+  text-indent:.62em;
+  color:#C99A96;
+  margin-top:3px;
+}
+/* Menüpontok sora (asztali nézet) */
+.nav-div-3{
+  display:flex;
+  flex-wrap:wrap;
+  gap:24px;
+  align-items:center;
+  font-weight:500;
+}
+/* „Időpontfoglalás" gomb a menüben */
+.nav-a-2{
+  background:#DDB9AE;
+  color:#1A1514;
+  padding:12px 24px;
+  border-radius:999px;
+  font-weight:600;
+}
+
+/* ===== Nyitókép (hero) ===== */
+/* Nyitókép: kétoszlopos rács (bal: szöveg, jobb: fotó); keskeny ablakban egymás alá kerül */
+.fooldal-div-1{
+  max-width:1200px;
+  margin:0 auto;
+  padding:32px 32px 48px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+  gap:56px;
+  align-items:center;
+}
+/* Kézírásos felirat a főcím fölött */
+.fooldal-div-2{
+  font-family:'Great Vibes',cursive;
+  font-size:44px;
+  line-height:1;
+  color:var(--accent);
+}
+/* Főcím: „Smink és sminktanácsadás" */
+.fooldal-h1-1{
+  font-family:'Cinzel',Georgia,serif;
+  font-weight:700;
+  font-size:60px;
+  line-height:1.08;
+  margin:16px 0 24px;
+}
+/* bekezdés – „Online időpontfoglalás néhány kattintáss…" */
+.fooldal-p-1{
+  margin:0 0 32px;
+  max-width:460px;
+  font-size:20px;
+}
+/* A két gomb sora a nyitóképen */
+.fooldal-div-3{
+  display:flex;
+  flex-wrap:wrap;
+  gap:16px;
+}
+/* Fő gomb: Foglalj időpontot a Notinón (rózsás háttér) */
+.fooldal-a-1{
+  background:var(--accent);
+  color:#fff;
+  padding:16px 32px;
+  border-radius:999px;
+  font-weight:600;
+}
+/* Másodlagos gomb: Munkáim (csak körvonal) */
+.fooldal-a-2{
+  border:2px solid #1A1514;
+  padding:14px 32px;
+  border-radius:999px;
+  font-weight:600;
+}
+/* A fotó tartója: a díszkörök ehhez képest vannak elhelyezve */
+.fooldal-div-4{
+  position:relative;
+  width:100%;
+  max-width:480px;
+  justify-self:center;
+}
+/* Ívelt keret a fotó körül */
+.fooldal-div-5{
+  border-radius:140px 140px 32px 32px;
+  overflow:hidden;
+  background:#DDB9AE;
+  aspect-ratio:1080/1210;
+}
+/* Dóri fotója: kitölti a keretet, nem torzul */
+.fooldal-img-1{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+/* Nagy lebegő díszkör (bal) */
+.fooldal-div-6{
+  position:absolute;
+  left:-28px;
+  top:16%;
+  width:96px;
+  height:96px;
+  border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#fff7,transparent 45%),#B9857E;
+}
+/* Kis lebegő díszkör (jobb) */
+.fooldal-div-7{
+  animation-delay:-2.5s;
+  position:absolute;
+  right:-22px;
+  bottom:18%;
+  width:72px;
+  height:72px;
+  border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#fff7,transparent 45%),#8E5A55;
+}
+
+/* ===== Futószalag sáv ===== */
+/* Sötét sáv: elrejti, ami kilóg belőle */
+.futoszalag-div-1{
+  background:#1A1514;
+  color:#F3EAE4;
+  margin-top:0;
+  padding:28px 0;
+  overflow:hidden;
+}
+/* A futó szöveg sora (a „tick" animáció mozgatja) */
+.futoszalag-div-2{
+  font-family:'Cinzel',Georgia,serif;
+  font-weight:500;
+  font-size:22px;
+  letter-spacing:.08em;
+  white-space:nowrap;
+}
+/* Futó szöveg: SMINK / SMINKTANÁCSADÁS / ONLINE FOGLALÁS */
+.futoszalag-span-1{
+  padding:0 24px;
+}
+/* Rózsaszín szívecske a szavak között */
+.futoszalag-span-2{
+  color:#DDB9AE;
+}
+
+/* ===== Munkáim ===== */
+/* Munkáim szakasz háttere (mélyebb bézs) */
+.munkak-div-1{
+  background:#EADBD1;
+}
+/* tartó – „Munkáim Válogatás a legkedvesebb sminkek…" */
+.munkak-div-2{
+  max-width:1200px;
+  margin:0 auto;
+  padding:96px 32px 48px;
+}
+/* szakaszcím – „Munkáim" */
+.munkak-h2-1{
+  font-family:'Cinzel',Georgia,serif;
+  font-weight:700;
+  font-size:44px;
+  line-height:1.1;
+  margin:0 0 12px;
+}
+/* bekezdés – „Válogatás a legkedvesebb sminkekből." */
+.munkak-p-1{
+  margin:0 0 40px;
+  max-width:520px;
+}
+/* tartó – díszítő elem (rugalmas sor) */
+.munkak-div-3{
+  display:flex;
+  flex-wrap:wrap;
+  gap:20px;
+  justify-content:center;
+}
+/* tartó – díszítő elem (lekerekített keret) */
+.munkak-div-4{
+  flex:0 1 calc(25% - 15px);
+  min-width:230px;
+  aspect-ratio:4/5;
+  border-radius:24px;
+  overflow:hidden;
+  background:#DDB9AE;
+}
+/* kép – kép: „Természetes, meleg tónusú smink" */
+.munkak-img-1{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+
+/* ===== Előtte és utána ===== */
+/* tartó – „Egy átalakulás, ami nem elfed, hanem kie…" */
+.elotte-utana-div-1{
+  background:#F6EEE9;
+}
+/* tartó – „Egy átalakulás, ami nem elfed, hanem kie…" */
+.elotte-utana-div-2{
+  max-width:1200px;
+  margin:0 auto;
+  padding:48px 32px;
+}
+/* tartó – „Egy átalakulás, ami nem elfed, hanem kie…" */
+.elotte-utana-div-3{
+  text-align:center;
+  margin-bottom:40px;
+}
+/* tartó – „Egy átalakulás, ami nem elfed, hanem kie…" */
+.elotte-utana-div-4{
+  font-family:'Great Vibes',cursive;
+  font-size:44px;
+  line-height:1;
+  color:var(--accent);
+}
+/* szakaszcím – „Előtte és utána" */
+.elotte-utana-h2-1{
+  font-family:'Cinzel',Georgia,serif;
+  font-weight:700;
+  font-size:44px;
+  line-height:1.1;
+  margin:8px 0 0;
+}
+/* tartó – „ELŐTTE UTÁNA" (rács) */
+.elotte-utana-div-5{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:24px;
+  max-width:960px;
+  margin:0 auto;
+}
+/* tartó – „ELŐTTE" (lekerekített keret) */
+.elotte-utana-div-6{
+  position:relative;
+  border-radius:32px;
+  overflow:hidden;
+  aspect-ratio:1080/1170;
+  background:#DDB9AE;
+}
+/* kép – kép: „Vendég smink előtt" */
+.elotte-utana-img-1{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+/* tartó – „ELŐTTE" */
+.elotte-utana-div-7{
+  position:absolute;
+  left:20px;
+  bottom:20px;
+  background:#fff;
+  color:#1A1514;
+  padding:8px 20px;
+  border-radius:999px;
+  font-weight:600;
+  letter-spacing:.12em;
+  font-size:14px;
+}
+/* tartó – „UTÁNA" */
+.elotte-utana-div-8{
+  position:absolute;
+  left:20px;
+  bottom:20px;
+  background:var(--accent);
+  color:#fff;
+  padding:8px 20px;
+  border-radius:999px;
+  font-weight:600;
+  letter-spacing:.12em;
+  font-size:14px;
+}
+/* bekezdés – „Smink: Dóra Makeup · Fotó: Laura Konya P…" */
+.elotte-utana-p-1{
+  text-align:center;
+  font-size:15px;
+  margin:20px 0 0;
+}
+
+/* ===== Szolgáltatások ===== */
+/* tartó – „Szolgáltatások Szolgáltatásaim között a …" */
+.szolgaltatasok-div-1{
+  background:#E3CEC2;
+}
+/* tartó – „Szolgáltatások Szolgáltatásaim között a …" */
+.szolgaltatasok-div-2{
+  max-width:1200px;
+  margin:0 auto;
+  padding:96px 32px 48px;
+}
+/* szakaszcím – „Szolgáltatások" */
+.szolgaltatasok-h2-1{
+  font-family:'Cinzel',Georgia,serif;
+  font-weight:700;
+  font-size:44px;
+  line-height:1.1;
+  margin:0;
+  text-align:center;
+}
+/* bekezdés – „Szolgáltatásaim között a prémium mindenn…" */
+.szolgaltatasok-p-1{
+  margin:16px auto 0;
+  max-width:720px;
+  text-align:center;
+}
+/* tartó – „Professzionális SMINK PROFESSZIONÁLIS SM…" */
+.szolgaltatasok-div-3{
+  margin-top:80px;
+  text-align:center;
+}
+/* tartó – „Professzionális" */
+.szolgaltatasok-div-4{
+  font-family:'Great Vibes',cursive;
+  font-size:44px;
+  line-height:1;
+  color:var(--accent);
+}
+/* szakaszcím – „SMINK" */
+.szolgaltatasok-h2-2{
+  font-family:'Cinzel',Georgia,serif;
+  font-weight:700;
+  font-size:44px;
+  line-height:1.1;
+  margin:8px 0 8px;
+  letter-spacing:.06em;
+}
+/* bekezdés – „PROFESSZIONÁLIS SMINK SZOLGÁLTATÁSOK" */
+.szolgaltatasok-p-2{
+  margin:0 0 40px;
+  letter-spacing:.14em;
+  font-size:15px;
+  font-weight:500;
+}
+/* tartó – „MINDENNAPI SMINK Soft-everyday makeup Ha…" (rács) */
+.szolgaltatasok-div-5{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:24px;
+}
+/* tartó – „MINDENNAPI SMINK Soft-everyday makeup Ha…" (rugalmas sor) */
+.szolgaltatasok-div-6{
+  background:#fff;
+  border-radius:28px;
+  padding:32px 28px;
+  border:2px solid transparent;
+  display:flex;
+  flex-direction:column;
+}
+/* kártyacím – „MINDENNAPI SMINK" */
+.szolgaltatasok-h3-1{
+  margin:0;
+  font-family:'Cinzel',Georgia,serif;
+  font-weight:700;
+  font-size:20px;
+  min-height:2.6em;
+  line-height:1.3;
+  letter-spacing:.04em;
+}
+/* tartó – „Soft-everyday makeup" */
+.szolgaltatasok-div-7{
+  color:var(--accent);
+  font-style:italic;
+  margin-bottom:12px;
+}
+/* bekezdés – „Ha egy természetes, friss bőrkép a célod…" */
+.szolgaltatasok-p-3{
+  margin:0 0 24px;
+  flex:1;
+  font-size:17px;
+}
+/* tartó – „12.000 Ft 45–60 perc" */
+.szolgaltatasok-div-8{
+  border-top:1px solid #DDB9AE;
+  padding-top:20px;
+}
+/* tartó – „12.000 Ft" */
+.szolgaltatasok-div-9{
+  font-family:'Cinzel',Georgia,serif;
+  font-size:36px;
+  color:var(--accent);
+}
+/* felirat – „Ft" */
+.szolgaltatasok-span-1{
+  font-size:20px;
+}
+/* tartó – „45–60 perc" */
+.szolgaltatasok-div-10{
+  font-size:16px;
+}
+/* tartó – díszítő elem */
+.szolgaltatasok-div-11{
+  margin-bottom:12px;
+}
+/* kártyacím – „BASIC" */
+.szolgaltatasok-h3-2{
+  margin:0;
+  font-family:'Cinzel',Georgia,serif;
+  font-weight:700;
+  font-size:20px;
+  line-height:1.3;
+  letter-spacing:.04em;
+}
+/* tartó – „AJÁNLOTT STANDARD Sminktanácsadás Komple…" (rugalmas sor) */
+.szolgaltatasok-div-12{
+  background:#fff;
+  border-radius:28px;
+  padding:32px 28px;
+  border:2px solid var(--accent);
+  display:flex;
+  flex-direction:column;
+}
+/* tartó – „AJÁNLOTT" */
+.szolgaltatasok-div-13{
+  align-self:flex-start;
+  background:var(--accent);
+  color:#fff;
+  font-size:13px;
+  font-weight:600;
+  letter-spacing:.08em;
+  padding:4px 14px;
+  border-radius:999px;
+  margin-bottom:12px;
+}
+/* tartó – „FONTOS INFORMÁCIÓ A tanácsadás egyéni, k…" */
+.szolgaltatasok-div-14{
+  margin-top:24px;
+  border:2px solid #DDB9AE;
+  border-radius:24px;
+  padding:32px;
+}
+/* kártyacím – „FONTOS INFORMÁCIÓ" */
+.szolgaltatasok-h3-3{
+  margin:0 0 20px;
+  font-family:'Cinzel',Georgia,serif;
+  font-size:22px;
+  letter-spacing:.08em;
+}
+/* tartó – „A tanácsadás egyéni, kizárólag egy vendé…" (rács) */
+.szolgaltatasok-div-15{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:20px;
+  font-size:16px;
+}
+/* tartó – „A tanácsadás egyéni, kizárólag egy vendé…" */
+.szolgaltatasok-div-16{
+  padding:8px 4px;
+}
+/* tartó – „Dóra Makeup × Laura Konya Photography SM…" */
+.szolgaltatasok-div-17{
+  margin-top:80px;
+  text-align:center;
+  scroll-margin-top:24px;
+}
+/* bekezdés – „Professzionális smink és természetes fén…" */
+.szolgaltatasok-p-4{
+  margin:-16px auto 40px;
+  max-width:620px;
+  text-align:center;
+}
+/* tartó – „MINI TERMÉSZETESEN TE 24.210 Ft Mindenna…" (rugalmas sor) */
+.szolgaltatasok-div-18{
+  background:#fff;
+  border-radius:28px;
+  padding:36px;
+  display:flex;
+  flex-direction:column;
+}
+/* kártyacím – „MINI" */
+.szolgaltatasok-h3-4{
+  margin:0;
+  font-family:'Cinzel',Georgia,serif;
+  font-size:32px;
+  letter-spacing:.1em;
+  text-align:center;
+}
+/* tartó – „TERMÉSZETESEN TE" */
+.szolgaltatasok-div-19{
+  text-align:center;
+  color:var(--accent);
+  letter-spacing:.14em;
+  font-size:13px;
+  font-weight:600;
+  margin:4px 0 20px;
+}
+/* tartó – „24.210 Ft" */
+.szolgaltatasok-div-20{
+  background:#F3EAE4;
+  border-radius:14px;
+  padding:12px;
+  text-align:center;
+  font-family:'Cinzel',Georgia,serif;
+  font-size:28px;
+  margin-bottom:24px;
+}
+/* lista – „Mindennapi, természetes smink (45–60 per…" */
+.szolgaltatasok-ul-1{
+  margin:0;
+  padding-left:20px;
+  font-size:17px;
+  flex:1;
+}
+/* listaelem – „Mindennapi, természetes smink (45–60 per…" */
+.szolgaltatasok-li-1{
+  margin:0 0 8px;
+}
+/* tartó – „800 Ft / db" */
+.szolgaltatasok-div-21{
+  font-family:'Cinzel',Georgia,serif;
+  font-size:24px;
+  color:var(--accent);
+}
+/* kiemelés – „BUDAPEST" */
+.szolgaltatasok-b-1{
+  letter-spacing:.06em;
+}
+/* tartó – „20.000 Ft" */
+.szolgaltatasok-div-22{
+  font-family:'Cinzel',Georgia,serif;
+  font-size:28px;
+  color:var(--accent);
+}
+
+/* ===== Képzettség ===== */
+/* tartó – „Képzettség Tanulmányaimat Fábián Éva ala…" */
+.kepzettseg-div-1{
+  max-width:1200px;
+  margin:0 auto;
+  padding:96px 32px 48px;
+}
+/* szakaszcím – „Képzettség" */
+.kepzettseg-h2-1{
+  font-family:'Cinzel',Georgia,serif;
+  font-weight:700;
+  font-size:44px;
+  line-height:1.1;
+  margin:0 0 12px;
+}
+/* bekezdés – „Tanulmányaimat Fábián Éva alap, haladó é…" */
+.kepzettseg-p-1{
+  margin:0 0 40px;
+  max-width:760px;
+}
+/* tartó – „2026 Vizsga Pető Detti Sminkiskola 2024 …" (rács) */
+.kepzettseg-div-2{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:20px;
+}
+/* tartó – „2026 Vizsga Pető Detti Sminkiskola" */
+.kepzettseg-div-3{
+  border:2px solid #1A1514;
+  border-radius:24px;
+  padding:32px;
+}
+/* tartó – „2026" */
+.kepzettseg-div-4{
+  font-family:'Great Vibes',cursive;
+  font-size:44px;
+  line-height:1;
+  color:var(--accent);
+}
+/* kártyacím – „Vizsga" */
+.kepzettseg-h3-1{
+  margin:8px 0;
+  font-family:'Cinzel',Georgia,serif;
+  font-size:22px;
+}
+/* bekezdés – „Pető Detti Sminkiskola" */
+.kepzettseg-p-2{
+  margin:0;
+}
+
+/* ===== Márkák ===== */
+/* tartó – „Márkák, amikkel dolgozom Professzionális…" */
+.markak-div-1{
+  background:#D8BCB0;
+  margin-top:0;
+  padding:72px 32px;
+}
+/* tartó – „Márkák, amikkel dolgozom Professzionális…" */
+.markak-div-2{
+  max-width:1200px;
+  margin:0 auto;
+}
+/* szakaszcím – „Márkák, amikkel dolgozom" */
+.markak-h2-1{
+  font-family:'Cinzel',Georgia,serif;
+  font-weight:700;
+  font-size:44px;
+  line-height:1.1;
+  margin:0 0 12px;
+}
+/* bekezdés – „Professzionális és kedvelt termékek egya…" */
+.markak-p-1{
+  margin:0 0 32px;
+}
+/* tartó – „Estée Lauder MAC Make Up For Ever Maybel…" (rugalmas sor) */
+.markak-div-3{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+}
+/* felirat – „Estée Lauder" */
+.markak-span-1{
+  background:#F3EAE4;
+  padding:12px 24px;
+  border-radius:999px;
+  font-weight:600;
+}
+
+/* ===== Rólam ===== */
+/* tartó – „Szia! Dóra vagyok. Számomra a smink nem …" */
+.rolam-div-1{
+  background:#F6EEE9;
+}
+/* tartó – „Szia! Dóra vagyok. Számomra a smink nem …" (rács) */
+.rolam-div-2{
+  max-width:1200px;
+  margin:0 auto;
+  padding:96px 32px 48px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:56px;
+  align-items:center;
+}
+/* tartó – díszítő elem (lekerekített keret) */
+.rolam-div-3{
+  width:100%;
+  max-width:440px;
+  justify-self:center;
+  aspect-ratio:905/1348;
+  border-radius:220px 220px 32px 32px;
+  overflow:hidden;
+  background:#1A1514;
+}
+/* kép – kép: „Dóra portré" */
+.rolam-img-1{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+/* tartó – „Szia!" */
+.rolam-div-4{
+  font-family:'Great Vibes',cursive;
+  font-size:44px;
+  line-height:1;
+  color:var(--accent);
+}
+/* szakaszcím – „Dóra vagyok." */
+.rolam-h2-1{
+  font-family:'Cinzel',Georgia,serif;
+  font-weight:700;
+  font-size:44px;
+  line-height:1.1;
+  margin:8px 0 20px;
+}
+/* bekezdés – „Számomra a smink nem elfed, hanem kiemel…" */
+.rolam-p-1{
+  margin:0 0 16px;
+}
+/* bekezdés – „Ha pedig szeretnéd megtanulni, hogyan sm…" */
+.rolam-p-2{
+  margin:0 0 24px;
+}
+/* tartó – „Saját stúdió Házhoz is megyek" (rugalmas sor) */
+.rolam-div-5{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  margin-bottom:16px;
+}
+/* felirat – „Saját stúdió" */
+.rolam-span-1{
+  background:#fff;
+  border:2px solid #DDB9AE;
+  padding:8px 20px;
+  border-radius:999px;
+  font-weight:600;
+  font-size:15px;
+}
+/* bekezdés – „3346 Bélapátfalva, Hársas utca 2." */
+.rolam-p-3{
+  margin:0;
+  font-size:15px;
+}
+
+/* ===== Vélemények ===== */
+/* tartó – „Értékelések a Notinón Vendégeim mondták …" */
+.velemenyek-div-1{
+  background:#EADBD1;
+  padding-bottom:72px;
+}
+/* tartó – „Értékelések a Notinón Vendégeim mondták …" */
+.velemenyek-div-2{
+  max-width:1200px;
+  margin:0 auto;
+  padding:48px 32px;
+}
+/* tartó – „Értékelések a Notinón Vendégeim mondták" */
+.velemenyek-div-3{
+  text-align:center;
+  margin-bottom:40px;
+}
+/* tartó – „Értékelések a Notinón" */
+.velemenyek-div-4{
+  font-family:'Great Vibes',cursive;
+  font-size:44px;
+  line-height:1;
+  color:var(--accent);
+}
+/* szakaszcím – „Vendégeim mondták" */
+.velemenyek-h2-1{
+  font-family:'Cinzel',Georgia,serif;
+  font-weight:700;
+  font-size:44px;
+  line-height:1.1;
+  margin:8px 0 0;
+}
+/* tartó – „★★★★★ Nagyon profi munkát végzett, telje…" (rács) */
+.velemenyek-div-5{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:24px;
+  max-width:900px;
+  margin:0 auto;
+}
+/* tartó – „★★★★★ Nagyon profi munkát végzett, telje…" (rugalmas sor) */
+.velemenyek-div-6{
+  background:#FBF6F3;
+  border-radius:24px;
+  padding:32px;
+  display:flex;
+  flex-direction:column;
+}
+/* tartó – „★★★★★" */
+.velemenyek-div-7{
+  color:var(--accent);
+  font-size:22px;
+  letter-spacing:.1em;
+}
+/* bekezdés – „Nagyon profi munkát végzett, teljesen me…" */
+.velemenyek-p-1{
+  margin:12px 0 20px;
+  font-size:20px;
+  flex:1;
+}
+/* tartó – „✓ Ellenőrzött értékelés 2026. aug. 31." (rugalmas sor) */
+.velemenyek-div-8{
+  display:flex;
+  flex-wrap:wrap;
+  gap:4px 16px;
+  font-size:14px;
+}
+/* felirat – „✓ Ellenőrzött értékelés" */
+.velemenyek-span-1{
+  color:#2E7D32;
+  font-size:14px;
+  font-weight:600;
+}
+/* tartó – „További értékelések a Notinón" */
+.velemenyek-div-9{
+  text-align:center;
+  margin-top:32px;
+}
+/* link/gomb – „További értékelések a Notinón" */
+.velemenyek-a-1{
+  display:inline-block;
+  border:2px solid #1A1514;
+  padding:12px 28px;
+  border-radius:999px;
+  font-weight:600;
+}
+
+/* ===== Foglalás és elérhetőség ===== */
+/* tartó – „Foglalj időpontot Online, néhány kattint…" */
+.foglalas-div-1{
+  background:#1A1514;
+  color:#F3EAE4;
+  margin-top:0;
+  padding:96px 32px;
+  text-align:center;
+}
+/* tartó – „Foglalj időpontot" */
+.foglalas-div-2{
+  font-family:'Great Vibes',cursive;
+  font-size:52px;
+  line-height:1;
+  color:#DDB9AE;
+}
+/* szakaszcím – „Online, néhány kattintással" */
+.foglalas-h2-1{
+  font-family:'Cinzel',Georgia,serif;
+  font-weight:700;
+  font-size:44px;
+  line-height:1.1;
+  margin:12px 0 16px;
+}
+/* bekezdés – „A foglalás a Notinón keresztül történik." */
+.foglalas-p-1{
+  margin:0 auto 32px;
+  max-width:480px;
+}
+/* link/gomb – „Foglalj időpontot a Notinón" */
+.foglalas-a-1{
+  display:inline-block;
+  background:#DDB9AE;
+  color:#1A1514;
+  padding:16px 40px;
+  border-radius:999px;
+  font-weight:600;
+}
+/* tartó – „CÍM 3346 Bélapátfalva, Hársas utca 2. TE…" (rács) */
+.foglalas-div-3{
+  max-width:900px;
+  margin:56px auto 0;
+  border-top:1px solid #3A2F2D;
+  padding-top:40px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:16px;
+  text-align:center;
+}
+/* tartó – „CÍM 3346 Bélapátfalva, Hársas utca 2." */
+.foglalas-div-4{
+  padding:8px 4px;
+}
+/* tartó – „CÍM" */
+.foglalas-div-5{
+  font-family:'Cinzel',Georgia,serif;
+  font-size:14px;
+  letter-spacing:.14em;
+  color:#DDB9AE;
+  margin-bottom:6px;
+}
+/* tartó – „3346 Bélapátfalva, Hársas utca 2." */
+.foglalas-div-6{
+  font-size:17px;
+}
+/* link/gomb – „@dora.makeupp" */
+.foglalas-a-2{
+  text-decoration:underline;
+}
+
+/* ===== Lábléc és lebegő elemek ===== */
+/* Lábléc: sötét sáv a szerzői jogi sorral */
+.lablec-div-1{
+  background:#1A1514;
+  color:#F3EAE4;
+  border-top:1px solid #3A2F2D;
+  padding:24px 32px;
+  text-align:center;
+  font-size:14px;
+}
+/* tartó – díszítő elem (rögzített) */
+.lablec-div-2{
+  position:fixed;
+  left:6px;
+  bottom:112px;
+  width:96px;
+  z-index:40;
+  pointer-events:none;
+}
+/* rajz – díszítő elem */
+.lablec-svg-1{
+  display:block;
+  overflow:visible;
+}
+/* tartó – díszítő elem (rögzített) */
+.lablec-div-3{
+  position:fixed;
+  right:14px;
+  top:96px;
+  bottom:104px;
+  width:24px;
+  z-index:40;
+  pointer-events:none;
+}
+/* tartó – díszítő elem */
+.lablec-div-4{
+  position:absolute;
+  left:50%;
+  margin-left:-1.5px;
+  top:0;
+  bottom:0;
+  width:3px;
+  border-radius:2px;
+  background:rgba(26,21,20,.12);
+}
+/* tartó – díszítő elem */
+.lablec-div-5{
+  position:absolute;
+  left:50%;
+  margin-left:-1.5px;
+  top:0;
+  bottom:0;
+  width:3px;
+  border-radius:2px;
+  background:linear-gradient(#DDB9AE,#B24A62);
+}
+/* tartó – díszítő elem */
+.lablec-div-6{
+  position:absolute;
+  left:50%;
+  top:0;
+  translate:-6px -100%;
+  line-height:0;
+}
+/* link/gomb – „↑" */
+.lablec-a-1{
+  background:var(--accent);
+}
+
+
+/* ==========================================================
+   ELSŐ KÉPERNYŐ: a nyitókép + a futó sáv kitölti az ablakot
+   Magyarázat: a .hero-screen minimum magassága = az ablak magassága - a menü magassága.
+   Így a sötét futó sáv a böngészőablak alján ül (pl. 16:9-es képernyőn is).
+   Csak olyan szélességen, ahol a nyitókép két oszlopban van; keskenyebben nincs kényszerített magasság.
+   ========================================================== */
+@media (min-width:761px){
+  .hero-screen{
+    display:flex;
+    flex-direction:column;
+    min-height:calc(100vh - var(--nav-h));   /* régebbi böngészők */
+    min-height:calc(100svh - var(--nav-h));  /* újabbak: a mobilos címsor nélküli valódi magasság */
+  }
+  .hero-screen .fooldal-div-1{
+    flex:1 1 auto;          /* a nyitókép kitölti a helyet a futó sáv fölött */
+    width:100%;
+    box-sizing:border-box;  /* a belső margó beleszámít a szélességbe */
+  }
+  /* A fotó magassága az ablak magasságához igazodik (hogy sosem lógjon ki az első képernyőről).
+     0.893 = a fotó szélesség/magasság aránya (1080×1210 px); 96px = a nyitókép fölötti és alatti hely. */
+  .hero-screen .fooldal-div-4{
+    max-width:max(240px, min(480px, calc((100svh - var(--nav-h) - var(--strip-h) - 96px) * .893)));
+  }
+}
+
+/* ==========================================================
+   HAMBURGER MENÜ GOMB (asztali nézetben rejtve)
+   ========================================================== */
+.nav-toggle{
+  display:none;
+  flex-direction:column;
+  justify-content:center;
+  gap:5px;
+  width:46px;
+  height:46px;
+  padding:0 11px;
+  border:0;
+  border-radius:12px;
+  background:transparent;
+  cursor:pointer;
+}
+.nav-toggle span{
+  display:block;
+  height:2.5px;
+  border-radius:2px;
+  background:#F3EAE4;
+  transition:transform .3s ease, opacity .2s ease;
+}
+/* Kinyitott állapot: a három vonalból X lesz */
+.nav-open .nav-toggle span:nth-child(1){transform:translateY(7.5px) rotate(45deg)}
+.nav-open .nav-toggle span:nth-child(2){opacity:0}
+.nav-open .nav-toggle span:nth-child(3){transform:translateY(-7.5px) rotate(-45deg)}
+
+/* ==========================================================
+   KISEBB KÉPERNYŐ (tablet és telefon, 1000 px alatt):
+   a menüpontok lenyitható, a menüsáv alatt megjelenő panelbe kerülnek
+   ========================================================== */
+@media (max-width:1000px){
+  :root{--nav-h:75px}
+  .nav-div-2{padding:10px 20px}
+  .nav-toggle{display:flex}
+
+  /* A menüpanel: alapból rejtve, a sáv alá csúszik be */
+  .nav-menu{
+    position:absolute;
+    left:0;
+    right:0;
+    top:100%;
+    flex-direction:column;
+    align-items:stretch;
+    gap:0;
+    padding:6px 20px 20px;
+    background:rgba(26,21,20,.98);
+    border-bottom:1px solid rgba(243,234,228,.12);
+    max-height:calc(100svh - var(--nav-h));
+    overflow-y:auto;                 /* ha nagyon alacsony az ablak, a menü görgethető */
+    visibility:hidden;
+    opacity:0;
+    transform:translateY(-8px);
+    pointer-events:none;
+    transition:opacity .25s ease, transform .25s ease, visibility .25s;
+  }
+  .nav-open .nav-menu{
+    visibility:visible;
+    opacity:1;
+    transform:none;
+    pointer-events:auto;
+  }
+  /* Nagy, könnyen megnyomható menüsorok */
+  .nav-menu a:not(.nav-a-2){
+    display:block;
+    padding:15px 4px;
+    font-size:18px;
+    border-bottom:1px solid rgba(243,234,228,.1);
+  }
+  .nav-menu .nav-a-2{
+    display:block;
+    margin-top:16px;
+    text-align:center;
+  }
+}
+
+/* ==========================================================
+   TELEFON (600 px alatt)
+   Az alábbi szabályok felülírják a fentieket, hogy minden elférjen a kis képernyőn:
+   - kisebb belső margók és betűméretek,
+   - a rácsok egy oszlopra váltanak,
+   - a hosszú szavak törnek, nem lógnak ki.
+   A nagy része az eredeti szabályok kicsinyített változata (ugyanazzal az osztálynévvel).
+   ========================================================== */
+@media (max-width:600px){
+
+  /* Hosszú szavak (pl. „sminktanácsadás", e-mail cím) sose lógjanak ki a képernyőről */
+  h1,h2,h3,p,a,span,b,li{overflow-wrap:break-word}
+  h1,h2,h3{hyphens:auto}
+  a[href^="mailto"]{overflow-wrap:anywhere}
+
+  /* --- Kézzel finomított részek --- */
+  /* Nyitókép: kisebb fotó, díszkörök a kép szélén belül (hogy ne okozzanak oldalra csúszást) */
+  .fooldal-div-4{max-width:340px}
+  .fooldal-div-6{left:-6px;width:60px;height:60px}
+  .fooldal-div-7{right:-6px;width:48px;height:48px}
+
+  /* Futó sáv: kisebb betű, kisebb magasság */
+  .futoszalag-div-1{padding:16px 0}
+  .futoszalag-div-2{font-size:15px}
+  .futoszalag-span-1{padding:0 14px}
+
+  /* Munkáim: két csempe egymás mellett (calc: a fél szélesség mínusz a rés fele) */
+  .munkak-div-4{flex:0 1 calc(50% - 8px);min-width:0;border-radius:18px}
+
+  /* „Vissza a tetejére" gomb: kisebb, közelebb a sarokhoz */
+  .totop{width:46px;height:46px;right:14px;bottom:14px;font-size:22px}
+
+  /* --- Automatikusan kicsinyített szabályok (szakaszonként ugyanaz az osztálynév) --- */
+  .fooldal-div-1{ padding:22px 22px 32px; grid-template-columns:1fr; gap:32px; }
+  .fooldal-div-2{ font-size:34px; }
+  .fooldal-h1-1{ font-size:clamp(30px,8.6vw,44px); }
+  .fooldal-a-1{ padding:16px 22px; }
+  .fooldal-a-2{ padding:14px 22px; }
+  .futoszalag-div-1{ padding:22px 0; }
+  .munkak-div-2{ padding:64px 22px 32px; }
+  .munkak-h2-1{ font-size:clamp(26px,7.6vw,34px); }
+  .munkak-p-1{ margin:0 0 28px; }
+  .munkak-div-3{ gap:16px; }
+  .elotte-utana-div-2{ padding:32px 22px; }
+  .elotte-utana-div-3{ margin-bottom:28px; }
+  .elotte-utana-div-4{ font-size:34px; }
+  .elotte-utana-h2-1{ font-size:clamp(26px,7.6vw,34px); }
+  .elotte-utana-div-5{ grid-template-columns:1fr; gap:18px; }
+  .szolgaltatasok-div-2{ padding:64px 22px 32px; }
+  .szolgaltatasok-h2-1{ font-size:clamp(26px,7.6vw,34px); }
+  .szolgaltatasok-div-3{ margin-top:56px; }
+  .szolgaltatasok-div-4{ font-size:34px; }
+  .szolgaltatasok-h2-2{ font-size:clamp(26px,7.6vw,34px); }
+  .szolgaltatasok-p-2{ margin:0 0 28px; }
+  .szolgaltatasok-div-5{ grid-template-columns:1fr; gap:18px; }
+  .szolgaltatasok-div-6{ padding:22px 22px; }
+  .szolgaltatasok-div-12{ padding:22px 22px; }
+  .szolgaltatasok-div-14{ padding:22px; }
+  .szolgaltatasok-div-15{ grid-template-columns:1fr; gap:16px; }
+  .szolgaltatasok-div-17{ margin-top:56px; }
+  .szolgaltatasok-p-4{ margin:-16px auto 28px; }
+  .szolgaltatasok-div-18{ padding:26px; }
+  .szolgaltatasok-div-20{ font-size:24px; }
+  .szolgaltatasok-div-21{ font-size:21px; }
+  .szolgaltatasok-div-22{ font-size:24px; }
+  .kepzettseg-div-1{ padding:64px 22px 32px; }
+  .kepzettseg-h2-1{ font-size:clamp(26px,7.6vw,34px); }
+  .kepzettseg-p-1{ margin:0 0 28px; }
+  .kepzettseg-div-2{ grid-template-columns:1fr; gap:16px; }
+  .kepzettseg-div-3{ padding:22px; }
+  .kepzettseg-div-4{ font-size:34px; }
+  .markak-div-1{ padding:48px 22px; }
+  .markak-h2-1{ font-size:clamp(26px,7.6vw,34px); }
+  .rolam-div-2{ padding:64px 22px 32px; grid-template-columns:1fr; gap:32px; }
+  .rolam-div-4{ font-size:34px; }
+  .rolam-h2-1{ font-size:clamp(26px,7.6vw,34px); }
+  .velemenyek-div-2{ padding:32px 22px; }
+  .velemenyek-div-3{ margin-bottom:28px; }
+  .velemenyek-div-4{ font-size:34px; }
+  .velemenyek-h2-1{ font-size:clamp(26px,7.6vw,34px); }
+  .velemenyek-div-5{ grid-template-columns:1fr; gap:18px; }
+  .velemenyek-div-6{ padding:22px; }
+  .velemenyek-a-1{ padding:12px 22px; }
+  .foglalas-div-1{ padding:64px 22px; }
+  .foglalas-div-2{ font-size:38px; }
+  .foglalas-h2-1{ font-size:clamp(26px,7.6vw,34px); }
+  .foglalas-a-1{ padding:16px 28px; }
+  .foglalas-div-3{ margin:40px auto 0; grid-template-columns:1fr; }
+  .lablec-div-1{ padding:24px 22px; }
+}
