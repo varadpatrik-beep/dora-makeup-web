@@ -11,29 +11,29 @@
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<!-- AZ EGÉSZ OLDAL KÜLSŐ TARTÓJA: alap háttérszín, betűtípus és szövegszín. Minden más ezen belül van. -->
+<!-- AZ EGÉSZ OLDAL KÜLSŐ TARTÓJA -->
 <div class="top-div-1">
-<!-- Az oldal legteteje: ide ugrik a logóra kattintás és a „vissza a tetejére" gomb. -->
+<!-- Az oldal legteteje -->
 <div id="top"></div>
 
-<!-- ===== FELSŐ MENÜ (görgetéskor is fent marad) ===== Asztali gépen a menüpontok egy sorban, telefonon a hamburger gomb mögött, lenyitva jelennek meg. -->
+<!-- FELSŐ MENÜ  -->
 <div id="nav" class="nav-div-1"><div class="nav-div-2">
-<!-- LOGÓ: a „DORA" felirat, mögötte a rózsás ecsetvonás (SVG), alatta a MAKEUP felirat. -->
+<!-- LOGÓ -->
 <a href="#top" aria-label="Dora Makeup" class="nav-a-1"><svg aria-hidden="true" viewBox="0 0 150 56" class="nav-svg-1"><defs><filter id="brushrough" x="-10%" y="-20%" width="120%" height="140%"><feTurbulence type="fractalNoise" baseFrequency="0.05 0.28" numOctaves="2" seed="4"/><feDisplacementMap in="SourceGraphic" scale="7"/></filter></defs><g filter="url(#brushrough)"><path d="M0 47 L26 38 L66 24 L108 10 L148 2 L150 8 L126 18 L142 20 L96 36 L52 50 L8 56 Z" fill="#B98A86" opacity=".8"/><path d="M12 42 L70 22 L130 8" stroke="#F3EAE4" stroke-width="1.4" opacity=".28" fill="none"/><path d="M24 50 L84 32 L138 14" stroke="#F3EAE4" stroke-width="1" opacity=".22" fill="none"/></g></svg><span class="nav-span-1">DORA</span><span class="nav-span-2">MAKEUP</span></a>
-<!-- HAMBURGER GOMB: csak kisebb képernyőn látszik, a js/script.js nyitja-zárja a menüt. -->
+<!-- HAMBURGER GOMB -->
 <button class="nav-toggle" type="button" aria-label="Menü megnyitása" aria-expanded="false" aria-controls="menu"><span></span><span></span><span></span></button>
-<!-- MENÜPONTOK: a kattintás az oldal megfelelő részére görget (a href értéke a szakasz azonosítója). -->
+<!-- MENÜPONTOK -->
 <div class="nav-div-3 nav-menu" id="menu">
 <a href="#munkak">Munkáim</a><a href="#szolgaltatasok">Szolgáltatások</a><a href="#fotozas">Dóra × Laura Photography</a><a href="#kepzettseg">Képzettség</a>
 <a href="#foglalas" class="nav-a-2">Időpontfoglalás</a>
 </div>
 </div></div>
 
-<!-- ===== ELSŐ KÉPERNYŐ ===== A nyitókép és a futó sötét sáv együtt kitölti a böngészőablakot, így a sáv az ablak alján van. -->
+<!-- ===== ELSŐ KÉPERNYŐ =====  -->
 <div class="hero-screen">
-<!-- NYITÓKÉP (hero): bal oldalon a szöveg és a gombok, jobb oldalon Dóri képe. Telefonon egymás alá kerülnek. -->
+<!-- NYITÓKÉP -->
 <div id="fooldal" class="fooldal-div-1">
-<!-- Bal oldal: kézírásos felirat, főcím, alcím és a két gomb (Notino foglalás, Munkáim). -->
+<!-- Bal oldal -->
 <div>
 <div class="fooldal-div-2">Szépség, ahogy te vagy</div>
 <h1 class="fooldal-h1-1">Smink és sminktanácsadás</h1>
@@ -43,7 +43,7 @@
 <a href="#munkak" class="fooldal-a-2">Munkáim</a>
 </div>
 </div>
-<!-- Jobb oldal: Dóri fényképe ívelt keretben, két lebegő díszkörrel. A kép mérete az ablak magasságához igazodik. -->
+<!-- Jobb oldal -->
 <div class="fooldal-div-4">
 <div class="fooldal-div-5"><img src="img/hero.jpg" alt="Dóra sminkel egy modellt a tükör előtt" class="fooldal-img-1"></div>
 <div class="fl fooldal-div-6"></div>
@@ -51,18 +51,18 @@
 </div>
 </div>
 
-<!-- FUTÓ SÖTÉT SÁV a szívecskékkel: a szöveg folyamatosan balra úszik (a „tick" osztály animációja a CSS-ben). A tartalma kétszer szerepel, hogy a körbefordulás észrevétlen legyen. -->
+<!-- FUTÓ SÖTÉT SÁV a szívecskékkel -->
 <div id="futoszalag" class="futoszalag-div-1"><div class="tick futoszalag-div-2"><span class="futoszalag-span-1">SMINK</span><span class="futoszalag-span-2">♥</span><span class="futoszalag-span-1">SMINKTANÁCSADÁS</span><span class="futoszalag-span-2">♥</span><span class="futoszalag-span-1">ONLINE FOGLALÁS</span><span class="futoszalag-span-2">♥</span><span class="futoszalag-span-1">SMINK</span><span class="futoszalag-span-2">♥</span><span class="futoszalag-span-1">SMINKTANÁCSADÁS</span><span class="futoszalag-span-2">♥</span><span class="futoszalag-span-1">ONLINE FOGLALÁS</span><span class="futoszalag-span-2">♥</span><span class="futoszalag-span-1">SMINK</span><span class="futoszalag-span-2">♥</span><span class="futoszalag-span-1">SMINKTANÁCSADÁS</span><span class="futoszalag-span-2">♥</span><span class="futoszalag-span-1">ONLINE FOGLALÁS</span><span class="futoszalag-span-2">♥</span><span class="futoszalag-span-1">SMINK</span><span class="futoszalag-span-2">♥</span><span class="futoszalag-span-1">SMINKTANÁCSADÁS</span><span class="futoszalag-span-2">♥</span><span class="futoszalag-span-1">ONLINE FOGLALÁS</span><span class="futoszalag-span-2">♥</span><span class="futoszalag-span-1">SMINK</span><span class="futoszalag-span-2">♥</span><span class="futoszalag-span-1">SMINKTANÁCSADÁS</span><span class="futoszalag-span-2">♥</span><span class="futoszalag-span-1">ONLINE FOGLALÁS</span><span class="futoszalag-span-2">♥</span><span class="futoszalag-span-1">SMINK</span><span class="futoszalag-span-2">♥</span><span class="futoszalag-span-1">SMINKTANÁCSADÁS</span><span class="futoszalag-span-2">♥</span><span class="futoszalag-span-1">ONLINE FOGLALÁS</span><span class="futoszalag-span-2">♥</span></div></div>
 </div>
 
-<!-- ===== MUNKÁIM ===== Fényképrács: a 7 kép egy sorba tördelt, középre igazított csempékben. Telefonon két oszlop. -->
+<!-- ===== MUNKÁIM ===== -->
 <div id="munkak" class="munkak-div-1"><div class="munkak-div-2">
 <h2 class="rv munkak-h2-1">Munkáim</h2>
 <p class="munkak-p-1">Válogatás a legkedvesebb sminkekből.</p>
 <div class="munkak-div-3"><div class="rv tile munkak-div-4"><img src="img/munka-1.jpg" alt="Természetes, meleg tónusú smink" class="munkak-img-1"></div><div class="rv tile munkak-div-4"><img src="img/munka-2.jpg" alt="Fotózáshoz készült smink" class="munkak-img-1"></div><div class="rv tile munkak-div-4"><img src="img/munka-3.jpg" alt="Szürkés-kék szemhéjsmink" class="munkak-img-1"></div><div class="rv tile munkak-div-4"><img src="img/munka-4.jpg" alt="Természetes smink szemüveggel" class="munkak-img-1"></div><div class="rv tile munkak-div-4"><img src="img/munka-5.jpg" alt="Természetes smink, barna ajak" class="munkak-img-1"></div><div class="rv tile munkak-div-4"><img src="img/munka-6.jpg" alt="Színes szemsmink" class="munkak-img-1"></div><div class="rv tile munkak-div-4"><img src="img/munka-7.jpg" alt="Sötét szemsmink, fényes ajkak" class="munkak-img-1"></div></div>
 </div></div>
 
-<!-- ===== ELŐTTE ÉS UTÁNA ===== Két egyforma kép egymás mellett (telefonon egymás alatt), ELŐTTE / UTÁNA címkével. -->
+<!-- ===== ELŐTTE ÉS UTÁNA =====  -->
 <div id="elotte-utana" class="elotte-utana-div-1"><div class="elotte-utana-div-2">
 <div class="elotte-utana-div-3"><div class="elotte-utana-div-4">Egy átalakulás, ami nem elfed, hanem kiemel</div>
 <h2 class="rv elotte-utana-h2-1">Előtte és utána</h2></div>
@@ -73,32 +73,32 @@
 <p class="elotte-utana-p-1">Smink: Dóra Makeup · Fotó: Laura Konya Photography</p>
 </div></div>
 
-<!-- ===== SZOLGÁLTATÁSOK ===== Három csoport: Smink (4 kártya), Sminktanácsadó (3 csomag + információs doboz), Smink & fotózás (3 csomag + doboz), végül a kiszállási díj. -->
+<!-- ===== SZOLGÁLTATÁSOK =====  -->
 <div id="szolgaltatasok" class="szolgaltatasok-div-1"><div class="szolgaltatasok-div-2">
 <h2 class="rv szolgaltatasok-h2-1">Szolgáltatások</h2>
 <p class="szolgaltatasok-p-1">Szolgáltatásaim között a prémium mindennapi, az alkalmi és a tartós menyasszonyi sminkek mellett a személyre szabott sminktanácsadást is megtalálod.</p>
 
-<!-- Smink csoport: négy árkártya (mindennapi, alkalmi, menyasszonyi próba, menyasszonyi). -->
+<!-- Smink csoport -->
 <div class="szolgaltatasok-div-3"><div class="szolgaltatasok-div-4">Professzionális</div><h2 class="rv szolgaltatasok-h2-2">SMINK</h2><p class="szolgaltatasok-p-2">PROFESSZIONÁLIS SMINK SZOLGÁLTATÁSOK</p></div>
 <div class="szolgaltatasok-div-5"><div class="rv card szolgaltatasok-div-6"><h3 class="szolgaltatasok-h3-1">MINDENNAPI SMINK</h3><div class="szolgaltatasok-div-7">Soft-everyday makeup</div><p class="szolgaltatasok-p-3">Ha egy természetes, friss bőrkép a célod, ez a szolgáltatás tökéletes választás! 45–60 perc alatt varázsolunk el arcformázással, szemöldök formázással és szempillaspirállal!</p><div class="szolgaltatasok-div-8"><div class="szolgaltatasok-div-9">12.000 <span class="szolgaltatasok-span-1">Ft</span></div><div class="szolgaltatasok-div-10">45–60 perc</div></div></div><div class="rv card szolgaltatasok-div-6"><h3 class="szolgaltatasok-h3-1">ALKALMI SMINK</h3><div class="szolgaltatasok-div-7">Matt Glam, Dewy Glam makeup</div><p class="szolgaltatasok-p-3">Egy különleges eseményre készülsz? Fedezd fel a különböző trendeket, mint a smokey eye vagy a gyöngyök használata! 60–120 perc alatt álmodjuk meg a tökéletes megjelenést.</p><div class="szolgaltatasok-div-8"><div class="szolgaltatasok-div-9">14.000 <span class="szolgaltatasok-span-1">Ft</span></div><div class="szolgaltatasok-div-10">60–120 perc</div></div></div><div class="rv card szolgaltatasok-div-6"><h3 class="szolgaltatasok-h3-1">MENYASSZONYI PRÓBASMINK</h3><div class="szolgaltatasok-div-11"></div><p class="szolgaltatasok-p-3">Tervezzük meg együtt a Nagy Napodat! A próbasmink során bőr előkészítési tippeket is kapsz. 80–120 perc alatt megtaláljuk a legjobb megoldást!</p><div class="szolgaltatasok-div-8"><div class="szolgaltatasok-div-9">18.000 <span class="szolgaltatasok-span-1">Ft</span></div><div class="szolgaltatasok-div-10">80–120 perc</div></div></div><div class="rv card szolgaltatasok-div-6"><h3 class="szolgaltatasok-h3-1">MENYASSZONYI SMINK</h3><div class="szolgaltatasok-div-11"></div><p class="szolgaltatasok-p-3">A nagy napra szánt sminked, a próbasmink alapján, mini arcmasszázzsal, hogy a stressz távol maradjon! 80–120 perc alatt a legszebb énedet hozom ki belőled.</p><div class="szolgaltatasok-div-8"><div class="szolgaltatasok-div-9">30.000 <span class="szolgaltatasok-span-1">Ft</span></div><div class="szolgaltatasok-div-10">80–120 perc</div></div></div></div>
 
-<!-- Sminktanácsadó csoport: Basic / Standard / Premium csomag, alatta a „Fontos információ" doboz. -->
+<!-- Sminktanácsadó csoport -->
 <div class="szolgaltatasok-div-3"><div class="szolgaltatasok-div-4">Személyre szabott tudás</div><h2 class="rv szolgaltatasok-h2-2">SMINKTANÁCSADÓ</h2><p class="szolgaltatasok-p-2">SZEMÉLYRE SZABOTT TUDÁS. MAGABIZTOS MEGJELENÉS.</p></div>
 <div class="szolgaltatasok-div-5"><div class="rv card szolgaltatasok-div-6"><h3 class="szolgaltatasok-h3-2">BASIC</h3><div class="szolgaltatasok-div-7">Sminktanácsadás</div><p class="szolgaltatasok-p-3">A tökéletes alapok elsajátítása a mindennapokra. Megismerjük az arcformádat és bőrtípusodat, és lépésről lépésre felépítjük a hozzád illő természetes sminket, amit otthon is könnyedén alkalmazhatsz.</p><div class="szolgaltatasok-div-8"><div class="szolgaltatasok-div-9">18.000 <span class="szolgaltatasok-span-1">Ft</span></div><div class="szolgaltatasok-div-10">75 perc</div></div></div><div class="rv card szolgaltatasok-div-12"><div class="szolgaltatasok-div-13">AJÁNLOTT</div><h3 class="szolgaltatasok-h3-2">STANDARD</h3><div class="szolgaltatasok-div-7">Sminktanácsadás</div><p class="szolgaltatasok-p-3">Komplett nappali és alkalmi smink oktatás az arcformád, szemformád és bőrtípusod figyelembevételével. Megtanuljuk a számodra előnyös technikákat, színeket, valamint a műszempilla felhelyezés alapjait is.</p><div class="szolgaltatasok-div-8"><div class="szolgaltatasok-div-9">25.000 <span class="szolgaltatasok-span-1">Ft</span></div><div class="szolgaltatasok-div-10">120 perc</div></div></div><div class="rv card szolgaltatasok-div-6"><h3 class="szolgaltatasok-h3-2">PREMIUM</h3><div class="szolgaltatasok-div-7">Sminktanácsadás</div><p class="szolgaltatasok-p-3">Teljes körű sminkoktatás: nappali, alkalmi és glam sminkek, részletes arc-, szem-, bőrtípus- és színtípus-elemzéssel. Műszempilla felhelyezés oktatás és személyre szabott termék- és eszközajánlás.</p><div class="szolgaltatasok-div-8"><div class="szolgaltatasok-div-9">32.000 <span class="szolgaltatasok-span-1">Ft</span></div><div class="szolgaltatasok-div-10">180 perc</div></div></div></div>
 <div class="rv szolgaltatasok-div-14"><h3 class="szolgaltatasok-h3-3">FONTOS INFORMÁCIÓ</h3><div class="szolgaltatasok-div-15"><div class="szolgaltatasok-div-16">A tanácsadás egyéni, kizárólag egy vendég részére történik.</div><div class="szolgaltatasok-div-16">Kérlek, smink nélkül vagy minimális sminkben érkezz.</div><div class="szolgaltatasok-div-16">Hozd magaddal a saját sminktermékeidet és ecseteidet, ha van!</div><div class="szolgaltatasok-div-16">Lemondás vagy módosítás legalább 24 órával a lefoglalt időpont előtt lehetséges.</div></div></div>
 
-<!-- Smink & fotózás (Dóra × Laura Photography): a menü „Dóra × Laura Photography" pontja ide ugrik. -->
-<!-- Smink & fotózás csoport: Mini / Glow / Beauty csomag, alatta a csomagokról szóló doboz. -->
+<!-- Smink & fotózás (Dóra × Laura Photography) -->
+<!-- Smink & fotózás csoport -->
 <div id="fotozas" class="szolgaltatasok-div-17"><div class="szolgaltatasok-div-4">Dóra Makeup × Laura Konya Photography</div><h2 class="rv szolgaltatasok-h2-2">SMINK &amp; FOTÓZÁS</h2><p class="szolgaltatasok-p-2">TERMÉSZETES SZÉPSÉG. VALÓDI PILLANATOK.</p></div>
 <p class="szolgaltatasok-p-4">Professzionális smink és természetes fényű fotózás – egy helyen, egy élményben. Hogy a kamera előtt is önmagad lehess.</p>
 <div class="szolgaltatasok-div-5"><div class="rv card szolgaltatasok-div-18"><h3 class="szolgaltatasok-h3-4">MINI</h3><div class="szolgaltatasok-div-19">TERMÉSZETESEN TE</div><div class="szolgaltatasok-div-20">24.210 Ft</div><ul class="szolgaltatasok-ul-1"><li class="szolgaltatasok-li-1">Mindennapi, természetes smink (45–60 perc)</li><li class="szolgaltatasok-li-1">30 perc fotózás</li><li class="szolgaltatasok-li-1">10 db szerkesztett kép</li><li class="szolgaltatasok-li-1">Helyszín egyeztetés alapján</li></ul></div><div class="rv card szolgaltatasok-div-18"><h3 class="szolgaltatasok-h3-4">GLOW</h3><div class="szolgaltatasok-div-19">RAGYOGÓ MEGJELENÉS</div><div class="szolgaltatasok-div-20">31.500 Ft</div><ul class="szolgaltatasok-ul-1"><li class="szolgaltatasok-li-1">Alkalmi smink (matt vagy dewy glam)</li><li class="szolgaltatasok-li-1">45–60 perc fotózás</li><li class="szolgaltatasok-li-1">20 db szerkesztett kép</li><li class="szolgaltatasok-li-1">Helyszín egyeztetés alapján</li></ul></div><div class="rv card szolgaltatasok-div-18"><h3 class="szolgaltatasok-h3-4">BEAUTY</h3><div class="szolgaltatasok-div-19">TELJES ÉLMÉNY</div><div class="szolgaltatasok-div-20">37.800 Ft</div><ul class="szolgaltatasok-ul-1"><li class="szolgaltatasok-li-1">Alkalmi smink (matt vagy dewy glam)</li><li class="szolgaltatasok-li-1">90 perc fotózás</li><li class="szolgaltatasok-li-1">35 db szerkesztett kép</li><li class="szolgaltatasok-li-1">2 szett / ruhaváltás</li><li class="szolgaltatasok-li-1">Helyszín egyeztetés alapján</li></ul></div></div>
 <div class="rv szolgaltatasok-div-14"><h3 class="szolgaltatasok-h3-3">A CSOMAGOKRÓL</h3><div class="szolgaltatasok-div-15"><div class="szolgaltatasok-div-16">Együtt, professzionálisan.</div><div class="szolgaltatasok-div-16">Egyedi igények szerint alakítható.</div><div class="szolgaltatasok-div-16">A kiválasztott képek digitális átadása.</div><div class="szolgaltatasok-div-16">Segítség a pózolásban.</div><div class="szolgaltatasok-div-16"><b>Extra képek:</b><div class="szolgaltatasok-div-21">800 Ft / db</div></div><div class="szolgaltatasok-div-16"><b>Helyszín: Bélapátfalva</b><div>Kiszállás egyeztetés kérdése.</div></div></div></div>
 
-<!-- Kiszállási díj doboz: Budapest, Eger, egyéb települések, parkolás. -->
+<!-- Kiszállási díj doboz -->
 <div class="rv szolgaltatasok-div-14"><h3 class="szolgaltatasok-h3-3">KISZÁLLÁSI DÍJ</h3><div class="szolgaltatasok-div-15"><div class="szolgaltatasok-div-16"><b class="szolgaltatasok-b-1">BUDAPEST</b><div class="szolgaltatasok-div-22">20.000 Ft</div></div><div class="szolgaltatasok-div-16"><b class="szolgaltatasok-b-1">EGER</b><div class="szolgaltatasok-div-22">4.000 Ft</div></div><div class="szolgaltatasok-div-16"><b class="szolgaltatasok-b-1">EGYÉB TELEPÜLÉSEK</b><div class="szolgaltatasok-div-22">150 Ft / km</div>A kiszállási díj távolság alapján kerül megállapításra.</div><div class="szolgaltatasok-div-16"><b class="szolgaltatasok-b-1">PARKOLÁSI DÍJ</b><div>A parkolás díja a vendéget terheli.</div></div></div></div>
 </div></div>
 
-<!-- ===== KÉPZETTSÉG ===== Bemutatkozó mondat és három kártya (vizsga, tanfolyam, workshop). -->
+<!-- ===== KÉPZETTSÉG ===== -->
 <div id="kepzettseg" class="kepzettseg-div-1">
 <h2 class="rv kepzettseg-h2-1">Képzettség</h2>
 <p class="kepzettseg-p-1">Tanulmányaimat Fábián Éva alap, haladó és menyasszonyi workshopján, illetve Pető Detti Sminkiskolájában végeztem.</p>
@@ -130,7 +130,7 @@
 </div>
 </div>
 
-<!-- ===== RÓLAM ===== Dóri portréja és a bemutatkozó szöveg, két kis címkével (Saját stúdió / Házhoz is megyek). -->
+<!-- ===== RÓLAM =====  -->
 <div id="rolam" class="rolam-div-1"><div class="rolam-div-2">
 <div class="rv rolam-div-3"><img src="img/portre.jpg" alt="Dóra portré" class="rolam-img-1"></div>
 <div>
@@ -144,7 +144,7 @@
 </div>
 </div></div>
 
-<!-- ===== VÉLEMÉNYEK ===== A Notinón kapott értékelések kártyákon, alatta a Notino profilra mutató gomb. -->
+<!-- ===== VÉLEMÉNYEK =====  -->
 <div id="velemenyek" class="velemenyek-div-1"><div class="velemenyek-div-2">
 <div class="velemenyek-div-3"><div class="velemenyek-div-4">Értékelések a Notinón</div><h2 class="rv velemenyek-h2-1">Vendégeim mondták</h2></div>
 <div class="velemenyek-div-5"><div class="rv card velemenyek-div-6"><div class="velemenyek-div-7">★★★★★</div><p class="velemenyek-p-1">Nagyon profi munkát végzett, teljesen meg voltam elégedve.:)</p><div><b>Brigi</b></div><div class="velemenyek-div-8"><span class="velemenyek-span-1">✓ Ellenőrzött értékelés</span><span>2026. aug. 31.</span></div></div><div class="rv card velemenyek-div-6"><div class="velemenyek-div-7">★★★★★</div><p class="velemenyek-p-1">Lenyűgöző,profi tartós sminket kaptam!Szívből ajánlom! 💗</p><div><b>Katalin</b></div><div class="velemenyek-div-8"><span>2026. aug. 23.</span></div></div></div>
@@ -152,7 +152,7 @@
 </div>
 </div>
 
-<!-- ===== FOGLALÁS ÉS ELÉRHETŐSÉG ===== Sötét szakasz: foglalás gomb (Notino), alatta cím, telefon, e-mail és Instagram. -->
+<!-- ===== FOGLALÁS ÉS ELÉRHETŐSÉG =====  -->
 <div id="foglalas" class="foglalas-div-1">
 <div class="foglalas-div-2">Foglalj időpontot</div>
 <h2 class="rv foglalas-h2-1">Online, néhány kattintással</h2>
@@ -163,9 +163,9 @@
 
 <!-- ===== LÁBLÉC ===== Szerzői jogi sor (2026). A sötét sáv zárja az oldalt. -->
 <div id="lablec" class="lablec-div-1">© 2026 Dóra Makeup</div>
-<!-- LEBEGŐ DÍSZ (bal alsó sarok): kis szempilla és szempillaspirál animáció, görgetésre rajzolódik ki. Csak nagy képernyőn látszik. -->
+<!-- LEBEGŐ DÍSZ (bal alsó sarok) -->
 <div aria-hidden="true" class="mini lablec-div-2"><svg viewBox="0 -120 800 320" width="96" class="lablec-svg-1"><defs><clipPath id="lashclip"><rect class="lr" x="40" y="-120" width="720" height="320"/></clipPath></defs><path d="M80 160 Q400 40 720 160 Q400 270 80 160 Z" fill="rgba(221,185,174,.55)"/><path d="M80 160 Q400 270 720 160" fill="none" stroke="rgba(26,21,20,.3)" stroke-width="4"/><path d="M80 160 Q400 40 720 160" fill="none" stroke="#1A1514" stroke-width="7" stroke-linecap="round"/><g clip-path="url(#lashclip)"><path d="M80.0 160.0 Q57.6 154.3 46.1 138.8" fill="none" stroke="#1A1514" stroke-width="6" stroke-linecap="round"/><path d="M112.0 148.6 Q88.4 139.2 76.9 121.4" fill="none" stroke="#1A1514" stroke-width="6" stroke-linecap="round"/><path d="M144.0 138.4 Q119.8 125.0 108.8 104.8" fill="none" stroke="#1A1514" stroke-width="6" stroke-linecap="round"/><path d="M176.0 129.4 Q151.8 111.9 141.7 89.4" fill="none" stroke="#1A1514" stroke-width="6" stroke-linecap="round"/><path d="M208.0 121.6 Q184.5 100.1 175.8 75.2" fill="none" stroke="#1A1514" stroke-width="6" stroke-linecap="round"/><path d="M240.0 115.0 Q217.9 89.6 211.0 62.7" fill="none" stroke="#1A1514" stroke-width="6" stroke-linecap="round"/><path d="M272.0 109.6 Q252.0 80.7 247.3 52.0" fill="none" stroke="#1A1514" stroke-width="6" stroke-linecap="round"/><path d="M304.0 105.4 Q286.6 73.4 284.6 43.4" fill="none" stroke="#1A1514" stroke-width="6" stroke-linecap="round"/><path d="M336.0 102.4 Q321.8 67.9 322.6 37.1" fill="none" stroke="#1A1514" stroke-width="6" stroke-linecap="round"/><path d="M368.0 100.6 Q357.3 64.3 361.2 33.3" fill="none" stroke="#1A1514" stroke-width="6" stroke-linecap="round"/><path d="M400.0 100.0 Q393.0 62.6 400.0 32.0" fill="none" stroke="#1A1514" stroke-width="6" stroke-linecap="round"/><path d="M432.0 100.6 Q428.8 62.9 438.8 33.3" fill="none" stroke="#1A1514" stroke-width="6" stroke-linecap="round"/><path d="M464.0 102.4 Q464.5 65.1 477.4 37.1" fill="none" stroke="#1A1514" stroke-width="6" stroke-linecap="round"/><path d="M496.0 105.4 Q500.0 69.2 515.4 43.4" fill="none" stroke="#1A1514" stroke-width="6" stroke-linecap="round"/><path d="M528.0 109.6 Q535.1 75.2 552.7 52.0" fill="none" stroke="#1A1514" stroke-width="6" stroke-linecap="round"/><path d="M560.0 115.0 Q569.8 82.8 589.0 62.7" fill="none" stroke="#1A1514" stroke-width="6" stroke-linecap="round"/><path d="M592.0 121.6 Q604.0 92.1 624.2 75.2" fill="none" stroke="#1A1514" stroke-width="6" stroke-linecap="round"/><path d="M624.0 129.4 Q637.6 102.8 658.3 89.4" fill="none" stroke="#1A1514" stroke-width="6" stroke-linecap="round"/><path d="M656.0 138.4 Q670.6 114.9 691.2 104.8" fill="none" stroke="#1A1514" stroke-width="6" stroke-linecap="round"/><path d="M688.0 148.6 Q703.0 128.1 723.1 121.4" fill="none" stroke="#1A1514" stroke-width="6" stroke-linecap="round"/><path d="M720.0 160.0 Q734.9 142.4 753.9 138.8" fill="none" stroke="#1A1514" stroke-width="6" stroke-linecap="round"/></g><g class="wand"><line x1="0" y1="0" x2="60" y2="-110" stroke="#1A1514" stroke-width="8" stroke-linecap="round"/><line x1="40" y1="-74" x2="62" y2="-114" stroke="#8E5A55" stroke-width="20" stroke-linecap="round"/><line x1="0" y1="0" x2="24" y2="-44" stroke="#1A1514" stroke-width="24" stroke-linecap="round"/><line x1="0" y1="0" x2="24" y2="-44" stroke="#DDB9AE" stroke-width="24" stroke-dasharray="2.5 5" opacity=".55"/></g></svg></div>
-<!-- LEBEGŐ DÍSZ (jobb szél): rúzs, ami a görgetéssel lefelé halad, és rózsás csíkot húz maga után. Telefonon rejtve. -->
+<!-- LEBEGŐ DÍSZ (jobb szél) -->
 <div aria-hidden="true" class="lp lablec-div-3"><div class="lablec-div-4"></div><div class="lp-fill lablec-div-5"></div><div class="lp-rider lablec-div-6"><svg width="22" height="48" viewBox="0 0 22 48"><rect x="5" y="0" width="12" height="20" rx="2" fill="#1A1514"/><rect x="4" y="20" width="14" height="8" fill="#DDB9AE"/><path d="M6 28H16V40L6 48Z" fill="#B24A62"/></svg></div></div>
 <!-- „VISSZA A TETEJÉRE" gomb: görgetés után jelenik meg a jobb alsó sarokban. -->
 <a href="#top" aria-label="Vissza a tetejére" class="totop lablec-a-1">↑</a>
